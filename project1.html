@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+	<script type="text/javascript" src="test.js"></script>
+
+	<script type="text/javascript" src="jquery-1.12.4.min.js"></script>
+
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="bootstrap.js"></script>
+
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
+	<meta content="utf-8" http-equiv="encoding">
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+	<meta name="viewport" content="width=device-width" />
+
+    <script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCc5_z2Zruh01mevWGVavrIZ6D5N5Q_lqc&sensor=false&libraries=geometry">
+    </script>
+
+    <script type="text/javascript" src="d3.min.js"></script>
+    <style type="text/css">
+        #heat1 div {
+            display: inline-block;
+            width: 45px;
+            height: 40px;
+        }
+         #heat2 div {
+            display: inline-block;
+            width: 50px;
+            height: 40px;
+        }
+         #heat3 div {
+            display: inline-block;
+            width: 55px;
+            height: 20px;
+        }
+        #heat4 div {
+            display: inline-block;
+            width: 45px;
+            height: 40px;
+        }
+        #heat5 div {
+            display: inline-block;
+            width: 47px;
+            height: 40px;
+        }
+        #heat6 div {
+            display: inline-block;
+            width: 50px;
+            height: 40px;
+        }
+        #heat7 div {
+            display: inline-block;
+            width: 53px;
+            height: 40px;
+        }
+        #heat8 div {
+            display: inline-block;
+            width: 55px;
+            height: 20px;
+        }
+    </style>
+
+    <script type="text/javascript" src="uvcharts.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="bootstrap.css">
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="assets/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+
+</head>
+<body onload="initialize()" >
+    
+
+	<div class="wrapper">
+    	<div class="sidebar" style="background-color: #FFFAF0" data-color="yellow"  >
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper" style=" overflow: auto; height: 400px ">
+            <div class="logo">
+                <a  class="simple-text">
+                    <strong><u>FILTERS</u></strong>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="#" onclick="root();">
+                        <i class="pe-7s-map-marker"></i>
+                        <p style="font-size: 20px">Route</p>
+                    </a>
+                    <div id="root" style="display: none">
+                    	<ul>
+							<li><div style="font-size: 16px"><input type="radio" name="route" id="ukhra" onchange = "time1();"/><em><font color="#00FA9A"><strong>Ukhra</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="route" id="azone" onchange = "time1();"/><em><font color="#00FA9A"><strong>A-Zone</strong></font></em></div></li>
+						</ul>
+					</div>
+                </li>
+
+                <li>
+                    <a href="#" onclick="time1();">
+                        <i class="pe-7s-clock"></i>
+                        <p style="font-size: 20px">Time</p>
+                    </a>
+                    <div id="time" style="display: none">
+                    	<ul>
+							<li><div style="font-size: 16px"><input type="radio" name="time" id="early" onchange="func();" /><em><font color="#00FA9A"><strong>Early Morning</strong></font></em></div></li>
+							<div id="select" style="display: none">
+								<ul>
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e1" /><em><font color="#00FA9A"><strong>up_1.txt</strong></font></em></div></li>								
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e2" /><em><font color="#00FA9A"><strong>up_4.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e3" /><em><font color="#00FA9A"><strong>up_8.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e4" /><em><font color="#00FA9A"><strong>up_16.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e5" /><em><font color="#00FA9A"><strong>up_18.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e6" /><em><font color="#00FA9A"><strong>up_22.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e7" /><em><font color="#00FA9A"><strong>up_25.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="e8" /><em><font color="#00FA9A"><strong>All</strong></font></em></div></li>
+								</ul>
+							</div>
+
+							<li><div style="font-size: 16px"><input type="radio" name="time" id="busy" onchange="func1()" /><em><font color="#00FA9A"><strong>Busy Hours</strong></font></em></div></li>
+							<div id="sel" style="display: none">
+								<ul>
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="b3" /><em><font color="#00FA9A"><strong>up_12.txt</strong></font></em></div></li>								
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="b4" /><em><font color="#00FA9A"><strong>up_13.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="b5" /><em><font color="#00FA9A"><strong>up_14.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="b6" /><em><font color="#00FA9A"><strong>up_15.txt</strong></font></em></div></li>
+
+									<li><div style="font-size: 16px"><input type="radio" name="ee" id="b7" /><em><font color="#00FA9A"><strong>All</strong></font></em></div></li>
+								</ul>
+							</div>
+                        </ul>
+                     </div>
+
+                    <div id="tim" style="display: none"> 
+                        <ul>
+                            <li><div style="font-size: 16px"><input type="radio" name="time" id="early1" onchange="func2();" /><em><font color="#00FA9A"><strong>Early Morning</strong></font></em></div></li>
+                            <div id="select1" style="display: none">
+                                <ul>
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ea1" /><em><font color="#00FA9A"><strong>up_24.txt</strong></font></em></div></li>                             
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ea2" /><em><font color="#00FA9A"><strong>up_29.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ea3" /><em><font color="#00FA9A"><strong>up_34.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ea4" /><em><font color="#00FA9A"><strong>up_38.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ea5" /><em><font color="#00FA9A"><strong>All</strong></font></em></div></li>
+                                </ul>
+                            </div>
+
+                            <li><div style="font-size: 16px"><input type="radio" name="time" id="normal" onchange="func3()" /><em><font color="#00FA9A"><strong>Normal Hours</strong></font></em></div></li>
+                            <div id="sel1" style="display: none">
+                                <ul>
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n3" /><em><font color="#00FA9A"><strong>up_1.txt</strong></font></em></div></li>                                
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n4" /><em><font color="#00FA9A"><strong>up_2.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n5" /><em><font color="#00FA9A"><strong>up_5.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n6" /><em><font color="#00FA9A"><strong>up_6.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n7" /><em><font color="#00FA9A"><strong>up_15.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n8" /><em><font color="#00FA9A"><strong>up_16.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n9" /><em><font color="#00FA9A"><strong>up_50.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="n10" /><em><font color="#00FA9A"><strong>All</strong></font></em></div></li>
+                                </ul>
+                            </div>
+
+                            <li><div style="font-size: 16px"><input type="radio" name="time" id="busy1" onchange="func4()" /><em><font color="#00FA9A"><strong>Busy Hours</strong></font></em></div></li>
+                            <div id="sel2" style="display: none">
+                                <ul>
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba3" /><em><font color="#00FA9A"><strong>up_3.txt</strong></font></em></div></li>                                
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba4" /><em><font color="#00FA9A"><strong>up_4.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba5" /><em><font color="#00FA9A"><strong>up_7.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba6" /><em><font color="#00FA9A"><strong>up_8.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba7" /><em><font color="#00FA9A"><strong>up_9.txt</strong></font></em></div></li>    
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba8" /><em><font color="#00FA9A"><strong>up_10.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba9" /><em><font color="#00FA9A"><strong>up_11.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba10" /><em><font color="#00FA9A"><strong>up_12.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba11" /><em><font color="#00FA9A"><strong>up_17.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba12" /><em><font color="#00FA9A"><strong>up_18.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba13" /><em><font color="#00FA9A"><strong>up_19.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba14" /><em><font color="#00FA9A"><strong>up_21.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba15" /><em><font color="#00FA9A"><strong>up_22.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba16" /><em><font color="#00FA9A"><strong>up_23.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba17" /><em><font color="#00FA9A"><strong>up_27.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba18" /><em><font color="#00FA9A"><strong>up_28.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba19" /><em><font color="#00FA9A"><strong>up_32.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba20" /><em><font color="#00FA9A"><strong>up_33.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba21" /><em><font color="#00FA9A"><strong>up_37.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba22" /><em><font color="#00FA9A"><strong>up_41.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba23" /><em><font color="#00FA9A"><strong>up_43.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba24" /><em><font color="#00FA9A"><strong>up_44.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba25" /><em><font color="#00FA9A"><strong>up_45.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba26" /><em><font color="#00FA9A"><strong>up_47.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba27" /><em><font color="#00FA9A"><strong>up_48.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba28" /><em><font color="#00FA9A"><strong>up_49.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba29" /><em><font color="#00FA9A"><strong>up_50.txt</strong></font></em></div></li>
+
+                                    <li><div style="font-size: 16px"><input type="radio" name="ee" id="ba30" /><em><font color="#00FA9A"><strong>All</strong></font></em></div></li>
+                                </ul>
+                            </div>
+						</ul>
+					</div>
+                </li>
+                
+                <li>
+                    <a href="#" onclick="plot();">
+                        <i class="pe-7s-graph3"></i>
+                        <p style="font-size: 20px">Plot</p>
+                    </a>
+                    <div id="plot" style="display: none">
+                    	<ul>
+							<li><div style="font-size: 16px"><input type="radio" id="vertex" name="geo" /><em><font color="#00FA9A"><strong>Vertex</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" id="edge" name="geo" /><em><font color="#00FA9A"><strong>Edge</strong></font></em></div></li>
+						</ul>
+					</div>
+                </li>
+
+                <li>
+                    <a href="#" onclick="colorv();">
+                        <i class="pe-7s-pen"></i>
+                        <p style="font-size: 20px">Colour(Vrtx)</p>
+                    </a>
+                    <div id="colv" style="display: none">
+                    	<ul>
+							<li><div style="font-size: 16px"><input type="radio" name="trail" onclick="setColor(this.value);" value="brown" /><em><font color="brown"><strong>Brown</strong></font></em></div></li>
+								
+							<li><div style="font-size: 16px"><input type="radio" name="trail" onclick="setColor(this.value);" value="blue" /><em><font color="blue"><strong>Blue</strong></font></em></div></li>								
+
+							<li><div style="font-size: 16px"><input type="radio" name="trail" onclick="setColor(this.value);" value="black" /><em><font color="black"><strong>Black</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" checked="checked" name="trail" onclick="setColor(this.value);" value="red" /><em><font color="red"><strong>Red</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="trail" onclick="setColor(this.value);" value="yellow" /><em><font color="yellow"><strong>Yellow</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="trail" onclick="setColor(this.value);" value="green" /><em><font color="green"><strong>Green</strong></font></em></div></li>
+						</ul>
+					</div>
+                </li>
+                <li>
+                    <a href="#" onclick="colore();">
+                        <i class="pe-7s-pen"></i>
+                        <p style="font-size: 20px">Colour(Edge)</p>
+                    </a>
+                    <div id="cole" style="display: none">
+                    	<ul>
+							<li><div style="font-size: 16px"><input type="radio" name="traill" onclick="setColorr(this.value);" value="brown" /><em><font color="brown"><strong>Brown</strong></font></em></div></li>
+								
+							<li><div style="font-size: 16px"><input type="radio" checked="checked" name="traill" onclick="setColorr(this.value);" value="blue" /><em><font color="blue"><strong>Blue</strong></font></em></div></li>								
+
+							<li><div style="font-size: 16px"><input type="radio" name="traill" onclick="setColorr(this.value);" value="black" /><em><font color="black"><strong>Black</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="traill" onclick="setColorr(this.value);" value="red" /><em><font color="red"><strong>Red</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="traill" onclick="setColorr(this.value);" value="yellow" /><em><font color="yellow"><strong>Yellow</strong></font></em></div></li>
+
+							<li><div style="font-size: 16px"><input type="radio" name="traill" onclick="setColorr(this.value);" value="green" /><em><font color="green"><strong>Green</strong></font></em></div></li>
+						</ul>
+					</div>
+
+                </li>
+
+                <li>
+                    <a href="#" onclick="velocity();">
+                        <i class="pe-7s-car"></i>
+                        <p style="font-size: 20px">Velocity(K/h)</p>
+                    </a>
+                    <div class="col-md-12" id="velocity" style="display: none">
+
+                    	<em><strong><span style="font-size: 16px; margin-left: 25px">(Shown by <font color="#DC143C"><span style="font-size:25px">Pink</span></font> Line)</span></strong></em><br>
+
+             		   	<input type="text" placeholder="Eg: 5-10(without space)" id="vel" name="velocity" style="width:160px;margin-left: 20px; background-color: #4D4D4D" /><br>
+             		</div>
+                </li>
+             
+                <!--<li>
+                    <a href="notifications.html">
+                        <i class="pe-7s-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>-->
+				<!--<li class="active-pro">
+                    <a href="upgrade.html">
+                        <i class="pe-7s-rocket"></i>
+                        <p>Upgrade to PRO</p>
+                    </a>
+                </li>-->
+            </ul>
+            <br><br><br>
+    		<div>
+				<label for="fileinput" class="btn btn-success active center-block">OK</label>
+				<input type="button" id="fileinput" onclick="upload();" style="display: none"></input>
+			</div>
+    	</div>
+    </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+        	<div class="container-fluid" style="background-color:#A9A9A9">
+                <div class="navbar-header">
+                    <a class="navbar-brand"><strong><span style="color: white"><u>Intelligent Transport System</u></span></strong></a>
+                </div>
+            </div>
+    		<div id="map_canvas" style="width: 100%; height:500px; float:right; border: 5px solid #FFA07A">
+    		</div> 
+
+    		<ul class="nav navbar-nav navbar-left">
+    			<li class="active">
+    				<a href="#" style="font-size:20px">
+    					<u>Velocity</u>
+    				</a>
+    			</li>
+    		</ul>
+
+    		<ul class="nav navbar-nav navbar-center">
+    			<li class="active">
+    				<a href="#" style="font-size:20px">
+    					<u>Travel Time</u>
+    				</a>
+    			</li>
+    		</ul>
+
+    		<!--<ul class="nav navbar-nav navbar-center-right">
+    			<li class="active">
+    				<a href="#">
+    					Distance
+    				</a>
+    			</li>
+    		</ul>-->
+        </nav>
+        <div id="h1" style="display:none"><a  style="text-align: center;font-size: 30px;margin-left:12px"><b><em>Velocity</em></b></a></div>
+    	<div id="heat1" style="margin-left: 10px">
+    	</div>
+        <br>
+       <!-- <div id="heat4" style="margin-left: 10px">
+        </div>
+        <br>
+        <div id="heat5" style="margin-left: 10px">
+        </div>
+        <br>
+        <div id="heat6" style="margin-left: 10px">
+        </div>
+        <br>-->
+        <p id="scale" style="text-align:center;display:none"><em><u><b>SCALE</b></u></em></p>
+        <div id="heat3" style="text-align:center">
+        </div>
+        <br> 
+        <div id="h2" style=" display:none"><a  style="text-align: center;font-size: 30px;margin-left:12px"><b><em>Travel Time</em></b></a></div>
+        <div id="heat4" style="margin-left: 10px">
+        </div>
+        <br>
+        <div id="heat5" style="margin-left: 10px">
+        </div>
+        <br>
+        <div id="heat6" style="margin-left: 10px">
+        </div>
+        <br>
+        <div id="heat2" style="margin-left: 10px"> 
+        </div>
+        <br>
+        <div id="heat7" style="margin-left: 10px"> 
+        </div>
+        <!--<p id="scale" style="text-align:center;display:none"><em><u><b>SCALE</b></u></em></p>-->
+        <br>
+        <br>
+        <div id="heat8" style="text-align: center"> 
+        </div>
+    </div>
+</body>
+</html>
+
